@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int A, B;
+		
+		A = s.nextInt();
+		B = s.nextInt();
+		if (!(1 <= A && A <= 10000 && 1 <= B && B <= 10000)) {
+			return;
+		}
+		
+		int c_min = (A > B)? A:B;
+		int gcf = 1, lcm = A*B;
+		for (int i = 2; i <= c_min; i++) {
+			if (A % i == 0 && B % i == 0) {
+				gcf = i;
+			}
+		}
+		
+		lcm = A*B/gcf; // gcf * (A/gcf) * (B/gcf)
+		
+		System.out.println(gcf);
+		System.out.println(lcm);
+	}
+}
