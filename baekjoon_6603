@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void lotto(int level, int index, int[] num, int[] temp, int k) {
+		if (level >= 6) {
+			//print출력
+			for (int i = 0; i < 6; i++)
+				System.out.print(temp[i] + " ");
+			System.out.println("");
+			return;
+		}
+		for (int i = index; i < k; i++) {
+			temp[level] = num[i];
+			lotto(level+1, i+1, num, temp, k);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+        int[] num = new int[12];
+	    int[] temp = new int[6];
+        int k;
+        
+		while (true) {
+			k = s.nextInt();
+			if (!(k != 0 || (6 < k && k < 13)))
+				break;
+			for (int i = 0; i < k; i++)
+				num[i] = s.nextInt();
+			lotto(0, 0, num, temp, k);
+			System.out.println("");
+		}
+	}
+}
