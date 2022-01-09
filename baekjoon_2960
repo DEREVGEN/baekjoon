@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int N, K;
+		
+		N = s.nextInt();
+		K = s.nextInt();
+		if (!(1 <= K && K < N && N <= 1000))
+			return;
+		
+		boolean[] num = new boolean[1000];
+		int count = 0;
+		
+		for (int i = 2; i < N+2; i++) {
+			if (num[i-2])// false
+				continue;
+			for (int j = 1; j <= N / i; j++) {
+				if (!num[i*j-2]) { // false
+					num[i*j-2] = true;
+					if (K == ++count) {
+						System.out.println(i*j);
+						return;
+					}
+				}
+			}
+	}
+}
+}
