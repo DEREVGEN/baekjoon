@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	static final int small = 0, big = 1, num = 2, space = 3;
+	
+	public static void intial_arr(int[] arr) {
+		for (int i = 0; i < arr.length; i++)
+			arr[i] = 0;
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int[] token = new int[4]; //소문자, 대문자, 숫자, 공백의 개수
+		
+		while(s.hasNextLine()) {
+			String str = s.nextLine();
+			intial_arr(token);
+			for (int i = 0; i < str.length(); i++) {
+				char c = str.charAt(i);
+				
+				if (c == ' ')
+					token[space]++;
+				else if (c <= '9')
+					token[num]++;
+				else if (c <= 'Z')
+					token[big]++;
+				else if (c <= 'z')
+					token[small]++;
+			}
+			for (int k = 0; k < 4; k++)
+				System.out.print(token[k] + " ");
+			System.out.println("");
+		}
+	}
+}
