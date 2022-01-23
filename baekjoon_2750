@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+//quick_sort
+
+public class Main {
+	public static int[] quick_sort(int[] num, int start, int last) {
+		if (start >= last) return num; //exit for recursive
+		
+		int left = start + 1;
+		int right = last;
+		int pivot = start;
+		
+		int temp;
+		
+		while (true) {
+			while (num[left] <= num[pivot] && left < last) left++;
+			while (num[right] > num[pivot] && right > start) right--;
+			if (left >= right) break; // exit while
+			//swap(left,right)
+			temp = num[left];
+			num[left] = num[right];
+			num[right] = temp;
+		}
+		
+		//swap (pivot, left) now, pivot is start
+		temp = num[pivot];
+		num[pivot] = num[right];
+		num[right] = temp;
+		
+		quick_sort(num, start, right - 1);
+		quick_sort(num, right + 1, last);
+		
+		return num;
+	}
+	
+	public static void main(String[] args) {
+		
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		
+		int N;
+		
+		N = s.nextInt();
+		int[] num = new int[N];
+		
+		for (int i = 0; i < N; i++)
+			num[i] = s.nextInt();
+		
+		num = quick_sort(num, 0, N-1);
+		
+		for (int i = 0; i < N; i++)
+			System.out.print(num[i] + " ");
+	}
