@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+//insert_sort
+
+public class Main {
+    public static int[] insert_sort(int[] num, int N) {
+		for (int i = 1; i < N; i++) {
+			int j = i;
+			
+			while (j - 1 >= 0 && num[i] <= num[j - 1]) j--;
+			
+			int temp = num[i];
+			
+			for (int k = i - 1; k >= j; k--)
+				num[k + 1] = num[k];
+			
+			num[j] = temp;
+		}
+		
+		return num;
+	}
+
+	public static void main(String[] args) {
+		
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		
+		int N;
+		
+		N = s.nextInt();
+		int[] num = new int[N];
+		
+		for (int i = 0; i < N; i++)
+			num[i] = s.nextInt();
+		
+		num = insert_sort(num, N);
+		
+		for (int i = 0; i < N; i++)
+			System.out.print(num[i] + " ");
+	}
+
+}
