@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	public static int max(int a, int b) {
+		if (a > b)
+			return a;
+		return b;
+	}
+	
+	static final int weight = 0;
+	static final int value = 1;
+	
+	public static void DP(int[][] things, int N, int K) {
+		int[][] map = new int[N+1][K+1]; // index는 1 부터 시작..
+		
+		for (int i = 0; i <= N; i++) {
+			for (int w = 0; w <= K; w++) {
+				if (i == 0 || w == 0)
+					map[i][w] = 0;
+				else if (things[i-1][weight] > w)
+					map[i][w] = map[i-1][w];
+				else
+					map[i][w] = max(things[i-1][value] + map[i-1][w-things[i-1][weight]], map[i-1][w]);
+					
+			}
+		}
+		
+		System.out.println(map[N][K]);
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int N = s.nextInt(); // 물품의 수
+		int K = s.nextInt(); // 최대 버틸 수 있는 무게
+		
+		if (!(1 <= N && N <= 100 && 1 <= K && K <= 100000)) 
+			return;
+		
+		int[][] things = new int[N][2]; // [N] = 물건 [2] = (cost, value)
+		
+		for (int i = 0; i < N; i++) {
+				things[i][0] = s.nextInt();
+				things[i][1] = s.nextInt();
+		}
+		
+		DP(things, N, K);
+	}
+
+}
