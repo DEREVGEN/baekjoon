@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class Main {
+		static int[] tnum;
+		static long swap = 0;
+		
+		public static void merge_sort(int[] num, int start, int last) {
+		
+		if (start >= last)  return;
+
+		int N = (last + start)/2;
+		
+		merge_sort(num, start, N);
+		merge_sort(num, N+1, last);
+
+		int i = start, j = N+1;
+		int count = start;
+		
+		while (i <= N && j <= last) {
+			if (num[i] <= num[j]) {
+				tnum[count++] = num[i++];
+			}
+			else { // right side num_arr cross left side, adding only right side to swap
+				swap += (long)(j-count);
+				tnum[count++] = num[j++];
+			}
+		}
+		if (i > N) {
+			for (; count <= last; count++)
+				tnum[count] = num[j++];
+		}
+		else {
+			for (; count <= last; count++)
+				tnum[count] = num[i++];
+		}
+		
+		for (int k = start; k <= last; k++)
+			num[k] = tnum[k];
+	}
+	public static void main(String[] args) {
+		int N;
+		
+		Scanner s = new Scanner(System.in);
+		
+		N = s.nextInt();
+		
+		int[] num = new int[N];
+		tnum = new int[N];
+		
+		for (int i = 0; i < N; i++)
+		{
+			num[i] = s.nextInt();
+		}
+		
+		merge_sort(num, 0, N-1);
+		
+		System.out.println(swap);
+	}
+}
