@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void heap_sort(int[] num, int N) {// 최소힙 구현
+		for (int i = (N-1)/2; i >= 0; i--) {
+			makeHeap(num, (i-1)/2, N-1);
+		}
+		
+		for (int i = N-1; i >= 0; i--) {
+			int temp;
+			System.out.println(num[0]);
+			
+			temp = num[0];
+			num[0] = num[i];
+			num[i] = temp;
+			
+			makeHeap(num, 0, i-1);
+		}
+	}
+	public static void makeHeap(int[] num, int h, int m) {
+		int temp = num[h];
+		int j;
+		for (j = h*2+1; j <= m; j = j*2+1) {
+			if (j < m) {
+				if (num[j] > num[j+1]) 
+					j++;
+			}
+			if (temp <= num[j]) break;
+			else
+				num[(j-1) / 2] = num[j];
+		}
+		num[(j-1) / 2] = temp;
+	}
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int N;		
+		
+		N = s.nextInt();
+		
+		int[] num = new int[N];
+		
+		for (int i = 0; i < N; i++)
+			num[i] = s.nextInt();
+		
+		heap_sort(num, N);
+		
+	}
+
+}
