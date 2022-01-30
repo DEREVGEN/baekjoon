@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		
+		int N, W, L; //number, weight, length
+		
+		Queue<Integer> bridge = new LinkedList<>();
+		Queue<Integer> trucks = new LinkedList<>();
+		
+		N = s.nextInt();
+		L = s.nextInt();
+		W = s.nextInt();
+		
+		for (int i = 0; i < N; i++)
+			trucks.add(s.nextInt()); // intialize truck_cost
+		for (int i = 0; i < L; i++)
+			bridge.add(0); // intialize 0 == empty
+		
+		int time = 0, c_w = 0;
+		int get, tcost;
+		
+		while (!trucks.isEmpty()) {
+			time++;
+			get = bridge.poll();
+			tcost = trucks.peek();
+			if (get != 0) // isCar
+				c_w -= get;
+			if (c_w+tcost <= W) { // can going
+				trucks.remove();
+				c_w += tcost;
+				bridge.add(tcost);
+			}
+			else // isNotCar
+				bridge.add(0);
+		}
+		time += L;
+		
+		System.out.println(time);
+	}
+
+}
