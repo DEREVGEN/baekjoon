@@ -1,0 +1,68 @@
+import java.util.*;
+
+public class Main {
+	
+	static final int NO = 0;
+	static final int YES = 1;
+	static final int YN = 0;
+	static final int LP = 1; // '('
+	static final int RP = 2; // ')'
+	
+	static HashSet<String> strarr = new HashSet<String>();
+	
+	public static void parenth(String str, int[][] check, int start, int cnt) {
+
+		for (int i = start; i < cnt; i++) {
+			check[i][YN] = YES;
+			parenth(str, check, i+1, cnt);
+			check[i][YN] = NO;
+		}
+		
+		StringBuilder tstr = new StringBuilder(str);
+		
+		for (int j = 0; j < cnt; j++) {
+			if (check[j][YN] == YES) {
+				tstr.setCharAt(check[j][LP], ' '); // tsrt[check[j][LP]] = NULL ~ is key
+				tstr.setCharAt(check[j][RP], ' ');
+			}
+		}
+		
+		String temp = "";
+		for (int j = 0; j < tstr.length(); j++) {
+			if (tstr.charAt(j) != ' ') {
+				temp += tstr.charAt(j);
+			}
+		}
+		strarr.add(temp);
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		Stack stack = new Stack();
+		
+		String str;
+		
+		str = s.next(); 
+		int cnt = 0; //check 인덱스 유지하기 위한 variable
+		int[][] check = new int[10][3];
+		
+		
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == '(')
+				stack.push(i);
+			else if (str.charAt(i) == ')') {
+				check[cnt][YN] = NO;
+				check[cnt][LP] = (int)stack.pop();
+				check[cnt++][RP] = i;
+			}
+		}
+
+		parenth(str, check, 0, cnt); 
+		
+		ArrayList<String> pstr = new ArrayList<String>(strarr);
+		Collections.sort(pstr);
+		
+		for (int i = 1; i < pstr.size(); i++)
+			System.out.println(pstr.get(i));
+	}
+}
